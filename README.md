@@ -23,6 +23,7 @@
     | b,  Then the player will change the direction of the snake towards the target.          |
     |     and the size of the snake will grow and if the snake touches his body the           |
     |     game will be over.                                                                  |
+    | c,  when the snake touch the border of the window game will over                        |
     | c,  And also we can change the level of the game from easy to medium and to hard.       |
      -----------------------------------------------------------------------------------------|
 </pre>
@@ -35,4 +36,5 @@
 	2. OpenGL
 	3. PyGame
   	4. Tkinter
+	5. Numpy
 </pre>
