@@ -18,12 +18,12 @@
 <pre>
  we are choosing to build a snake game. 
     |-----------------------------------------------------------------------------------------|
-    | a,  In the game, there will be the snake and the target. the target will be located at |
+    | a,  In the game, there will be the snake and the target. the target will be located at  |
     |     a random location.                                                                  |
-    | b,  Then the player will change the direction of the snake towards the target.         |
+    | b,  Then the player will change the direction of the snake towards the target.          |
     |     and the size of the snake will grow and if the snake touches his body the           |
     |     game will be over.                                                                  |
-    | c,  And also we can change the level of the game from easy to medium and to hard.     |
+    | c,  And also we can change the level of the game from easy to medium and to hard.       |
      -----------------------------------------------------------------------------------------|
 </pre>
 
