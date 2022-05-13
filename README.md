@@ -1,7 +1,7 @@
 ### Title
   <pre>
   SNAKE GAME
-   <pre>
+   </pre>
 ### Group Members
 
 <pre>
@@ -34,5 +34,5 @@
 	1. Python3
 	2. OpenGL
 	3. PyGame
-  4. Tkinter
+  	4. Tkinter
 </pre>
