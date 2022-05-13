@@ -1,7 +1,8 @@
-### SNAKE_GAME_GRAPHICS
-We are samuel and sefineh. This is repo for Computer Graphics project of snake game
-
-## Group Members
+### Title
+  <pre>
+  SNAKE GAME
+   <pre>
+### Group Members
 
 <pre>
 	|------------------------------------------------------------|
@@ -13,7 +14,7 @@ We are samuel and sefineh. This is repo for Computer Graphics project of snake g
 
 </pre>
 
-## About The App
+### About The App
 <pre>
  we are choosing to build a snake game. 
     |-----------------------------------------------------------------------------------------|
@@ -27,7 +28,7 @@ We are samuel and sefineh. This is repo for Computer Graphics project of snake g
 </pre>
 
  
-## Languages And Liberary used
+### Languages And Liberary used
 
 <pre>
 	1. Python3
