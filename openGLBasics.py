@@ -162,7 +162,7 @@ def main():
 					game_over = True 
 
 		# Rendering
-		glRotatef(0.1, 0, 1, 0)
+		#glRotatef(0.1, 0, 1, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		print(score)
 		cube((0, 0, 0), arena_size, color = [gray, white])
