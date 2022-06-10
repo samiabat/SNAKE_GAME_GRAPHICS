@@ -4,6 +4,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import random
 import numpy as np 
+from queue import deque
 #Colors using RGB format
 
 red = (1, 0, 0)
@@ -62,7 +63,7 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 					(3, 4, 5, 0))
 		if not fill:
 			glBegin(GL_LINES)
-			glColor3fv(black)
+			glColor3fv(white)
 			for edge in edges:
 				for vertex in edge:
 					glVertex3fv(vertices[vertex])
@@ -78,12 +79,12 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 					glVertex3fv(vertices[vertex])
 			glEnd()
 
-def apple(coordinates, block_size = 0.25):
+def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
 
 def snake(snake_lsit, snake_length, block_size = 0.25):
 	if len(snake_lsit) > snake_length:
-		del snake_lsit[0]
+		snake_lsit.popleft()
 
 	for xyz in snake_lsit:
 		snakeBoard(xyz, block_size, [sky, yellow])
@@ -104,12 +105,12 @@ def main():
 	x_enable = y_enable = z_enable = True
 
 	snake_length = 1
-	snake_lsit = []
+	snake_lsit = deque([])
 
 	apple_x = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 	apple_y = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 	apple_z = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	apple((apple_x, apple_y, apple_z), block_size)
+	target_food((apple_x, apple_y, apple_z), block_size)
 
 	# OpenGL Params
 	gluPerspective(45, (display_width / display_height), 0.1, 50.0)
@@ -180,7 +181,7 @@ def main():
 		snakeBoard((0, 0, 0), arena_size, color = [gray, white])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
-		apple((apple_x, apple_y, apple_z), block_size)
+		target_food((apple_x, apple_y, apple_z), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
 		clock.tick(FPS)
