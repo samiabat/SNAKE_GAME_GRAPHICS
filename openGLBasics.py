@@ -17,14 +17,27 @@ pink = (1, 0, 1)
 upperBound = (255, 255, 255)
 
 def cube(coords, block_size, color = [white], fill = True):
-	vertices = [np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2,
-				np.array([coords[0],coords[1], coords[2]])+block_size/2]
+	coord1 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord2 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord3 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord4 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord5 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord6 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord7 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	coord8 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+	vertices=(
+     		coord1.tolist(),
+           	coord2.tolist(),
+            coord3.tolist(),
+            coord4.tolist(),
+            coord5.tolist(),
+            coord6.tolist(),
+            coord7.tolist(),
+            coord8.tolist(),
+           )
+	
+
+
 
 	edges = ((0,1),
 			(1,2),
