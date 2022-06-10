@@ -16,7 +16,7 @@ pink = (1, 0, 1)
 
 upperBound = (255, 255, 255)
 
-def cube(coords, block_size, color = [white], fill = True):
+def snakeBoard(coords, block_size, color = [white], fill = True):
 		coord0 =np.array([coords[0],coords[1], coords[2]])+block_size/2
 		coord1 =np.array([coords[0],coords[1]-2*(block_size/2), coords[2]])+block_size/2
 		coord2 =np.array([coords[0]-2*(block_size/2),coords[1]-2*(block_size/2), coords[2]])+block_size/2
@@ -77,14 +77,14 @@ def cube(coords, block_size, color = [white], fill = True):
 			glEnd()
 
 def apple(coords, block_size = 0.25):
-	cube(coords, block_size, color = [red, pink])
+	snakeBoard(coords, block_size, color = [red, pink])
 
 def snake(snakelist, snakelen, block_size = 0.25):
 	if len(snakelist) > snakelen:
 		del snakelist[0]
 
 	for xyz in snakelist:
-		cube(xyz, block_size, [sky, yellow])
+		snakeBoard(xyz, block_size, [sky, yellow])
 
 def main():
 	pygame.init()
@@ -175,8 +175,8 @@ def main():
 		#glRotatef(0.1, 0, 1, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		# print(score)
-		cube((0, 0, 0), arena_size, color = [gray, white])
-		cube((0, 0, 0), arena_size, fill = False)
+		snakeBoard((0, 0, 0), arena_size, color = [gray, white])
+		snakeBoard((0, 0, 0), arena_size, fill = False)
 
 		apple((apple_x, apple_y, apple_z), block_size)
 		snake(snakelist, snakelen)
