@@ -3,7 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import random
-
+import numpy as np 
 red = (1, 0, 0)
 green = (0, 1, 0)
 blue = (0, 0, 1)
@@ -14,17 +14,17 @@ black = (0, 0, 0)
 gray = (0.5, 0.5, 0.5)
 pink = (1, 0, 1)
 
-whiteUB = (255, 255, 255)
+upperBound = (255, 255, 255)
 
 def cube(coords, block_size, color = [white], fill = True):
-	vertices = ((coords[0] + block_size / 2, coords[1] + block_size / 2, coords[2] + block_size / 2),
-				(coords[0] + block_size / 2, coords[1] - block_size / 2, coords[2] + block_size / 2),
-				(coords[0] - block_size / 2, coords[1] - block_size / 2, coords[2] + block_size / 2),
-				(coords[0] - block_size / 2, coords[1] + block_size / 2, coords[2] + block_size / 2),
-				(coords[0] - block_size / 2, coords[1] + block_size / 2, coords[2] - block_size / 2),
-				(coords[0] + block_size / 2, coords[1] + block_size / 2, coords[2] - block_size / 2),
-				(coords[0] + block_size / 2, coords[1] - block_size / 2, coords[2] - block_size / 2),
-				(coords[0] - block_size / 2, coords[1] - block_size / 2, coords[2] - block_size / 2))
+	vertices = [(coords[0],coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2]),
+				(coords[0], coords[1], coords[2])]
 
 	edges = ((0,1),
 			(1,2),
