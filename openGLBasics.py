@@ -94,7 +94,7 @@ def main():
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	clock = pygame.time.Clock()
-	FPS = 15
+	FPS = 10
 
 	block_size = 0.25
 	arena_size = 25 * block_size
@@ -162,7 +162,7 @@ def main():
 			game_over = True
 
 		# Got Apple
-		if abs(x-food_x_coordinate)<=0.05 and abs(y-food_y_coordinate)<=0.05:
+		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
 			food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
