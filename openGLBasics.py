@@ -4,6 +4,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import random
 import numpy as np 
+#Colors using RGB format
+
 red = (1, 0, 0)
 green = (0, 1, 0)
 blue = (0, 0, 1)
@@ -16,24 +18,24 @@ pink = (1, 0, 1)
 
 upperBound = (255, 255, 255)
 
-def snakeBoard(coords, block_size, color = [white], fill = True):
-		coord0 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-		coord1 =np.array([coords[0],coords[1]-2*(block_size/2), coords[2]])+block_size/2
-		coord2 =np.array([coords[0]-2*(block_size/2),coords[1]-2*(block_size/2), coords[2]])+block_size/2
-		coord3 =np.array([coords[0]-2*(block_size/2),coords[1], coords[2]])+block_size/2
-		coord4 =np.array([coords[0]-2*(block_size/2),coords[1], coords[2]-2*(block_size/2)])+block_size/2
-		coord5 =np.array([coords[0],coords[1], coords[2]-2*(block_size/2)])+block_size/2
-		coord6 =np.array([coords[0],coords[1]-2*(block_size/2), coords[2]-2*(block_size/2)])+block_size/2
-		coord7 =np.array([coords[0],coords[1], coords[2]])-block_size/2
+def snakeBoard(coordinates, block_size, color = [white], fill = True):
+		coordinate0 =np.array([coordinates[0],coordinates[1], coordinates[2]])+block_size/2
+		coordinate1 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
+		coordinate2 =np.array([coordinates[0]-2*(block_size/2),coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
+		coordinate3 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]])+block_size/2
+		coordinate4 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
+		coordinate5 =np.array([coordinates[0],coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
+		coordinate6 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
+		coordinate7 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
 		vertices=(
-				coord0.tolist(),
-				coord1.tolist(),
-				coord2.tolist(),
-				coord3.tolist(),
-				coord4.tolist(),
-				coord5.tolist(),
-				coord6.tolist(),
-				coord7.tolist(),
+				coordinate0.tolist(),
+				coordinate1.tolist(),
+				coordinate2.tolist(),
+				coordinate3.tolist(),
+				coordinate4.tolist(),
+				coordinate5.tolist(),
+				coordinate6.tolist(),
+				coordinate7.tolist(),
 			)
 		
 
@@ -76,14 +78,14 @@ def snakeBoard(coords, block_size, color = [white], fill = True):
 					glVertex3fv(vertices[vertex])
 			glEnd()
 
-def apple(coords, block_size = 0.25):
-	snakeBoard(coords, block_size, color = [red, pink])
+def apple(coordinates, block_size = 0.25):
+	snakeBoard(coordinates, block_size, color = [red, pink])
 
-def snake(snakelist, snakelen, block_size = 0.25):
-	if len(snakelist) > snakelen:
-		del snakelist[0]
+def snake(snake_lsit, snake_length, block_size = 0.25):
+	if len(snake_lsit) > snake_length:
+		del snake_lsit[0]
 
-	for xyz in snakelist:
+	for xyz in snake_lsit:
 		snakeBoard(xyz, block_size, [sky, yellow])
 
 def main():
@@ -101,8 +103,8 @@ def main():
 	score = 0
 	x_enable = y_enable = z_enable = True
 
-	snakelen = 1
-	snakelist = []
+	snake_length = 1
+	snake_lsit = []
 
 	apple_x = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 	apple_y = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
@@ -145,14 +147,14 @@ def main():
 					x_change, y_change, z_change = 0, 0, block_size
 					x_enable, y_enable, z_enable = True, True, False
 				elif event.key == pygame.K_p: # Cheat Code :p
-					snakelen += 1
+					snake_length += 1
 					score += 1
 
 		# Game Logic
 		x += x_change
 		y += y_change
 		z += z_change
-		snakelist.append((x, y, z))
+		snake_lsit.append((x, y, z))
 
 		# Hit Boundaries
 		if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
@@ -163,12 +165,12 @@ def main():
 			apple_x = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			apple_y = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			apple_z = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			snakelen += 1
+			snake_length += 1
 			score += 1
 
-		for i in range(0, len(snakelist)):
-			for j in range(i + 1, len(snakelist)):
-				if snakelist[i][0] == snakelist[j][0] and snakelist[i][1] == snakelist[j][1] and snakelist[i][2] == snakelist[j][2]:
+		for i in range(0, len(snake_lsit)):
+			for j in range(i + 1, len(snake_lsit)):
+				if snake_lsit[i][0] == snake_lsit[j][0] and snake_lsit[i][1] == snake_lsit[j][1] and snake_lsit[i][2] == snake_lsit[j][2]:
 					game_over = True 
 
 		# Rendering
@@ -179,7 +181,7 @@ def main():
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
 		apple((apple_x, apple_y, apple_z), block_size)
-		snake(snakelist, snakelen)
+		snake(snake_lsit, snake_length)
 		pygame.display.flip()
 		clock.tick(FPS)
 
