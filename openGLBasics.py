@@ -81,7 +81,6 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 
 def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
-
 def snake(snake_lsit, snake_length, block_size = 0.25):
 	if len(snake_lsit) > snake_length:
 		snake_lsit.popleft()
@@ -99,6 +98,7 @@ def main():
 
 	block_size = 0.25
 	arena_size = 25 * block_size
+ 
 	x_change, y_change, z_change = block_size, 0, 0
 	x, y, z = 0, 0, 0
 	score = 0
@@ -107,10 +107,10 @@ def main():
 	snake_length = 1
 	snake_lsit = deque([])
 
-	apple_x = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	apple_y = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	apple_z = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	target_food((apple_x, apple_y, apple_z), block_size)
+	food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+	food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+	food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+	target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
 
 	# OpenGL Params
 	gluPerspective(45, (display_width / display_height), 0.1, 50.0)
@@ -162,10 +162,10 @@ def main():
 			game_over = True
 
 		# Got Apple
-		if x == apple_x and y == apple_y and z == apple_z:
-			apple_x = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			apple_y = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			apple_z = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+		if abs(x-food_x_coordinate)<=0.05 and abs(y-food_y_coordinate)<=0.05:
+			food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+			food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+			food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			snake_length += 1
 			score += 1
 
@@ -181,7 +181,7 @@ def main():
 		snakeBoard((0, 0, 0), arena_size, color = [gray, white])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
-		target_food((apple_x, apple_y, apple_z), block_size)
+		target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
 		clock.tick(FPS)
