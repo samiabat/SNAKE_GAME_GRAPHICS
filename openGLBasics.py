@@ -17,64 +17,64 @@ pink = (1, 0, 1)
 upperBound = (255, 255, 255)
 
 def cube(coords, block_size, color = [white], fill = True):
-	coord1 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord2 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord3 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord4 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord5 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord6 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord7 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	coord8 =np.array([coords[0],coords[1], coords[2]])+block_size/2
-	vertices=(
-     		coord1.tolist(),
-           	coord2.tolist(),
-            coord3.tolist(),
-            coord4.tolist(),
-            coord5.tolist(),
-            coord6.tolist(),
-            coord7.tolist(),
-            coord8.tolist(),
-           )
-	
+		coord0 =np.array([coords[0],coords[1], coords[2]])+block_size/2
+		coord1 =np.array([coords[0],coords[1]-2*(block_size/2), coords[2]])+block_size/2
+		coord2 =np.array([coords[0]-2*(block_size/2),coords[1]-2*(block_size/2), coords[2]])+block_size/2
+		coord3 =np.array([coords[0]-2*(block_size/2),coords[1], coords[2]])+block_size/2
+		coord4 =np.array([coords[0]-2*(block_size/2),coords[1], coords[2]-2*(block_size/2)])+block_size/2
+		coord5 =np.array([coords[0],coords[1], coords[2]-2*(block_size/2)])+block_size/2
+		coord6 =np.array([coords[0],coords[1]-2*(block_size/2), coords[2]-2*(block_size/2)])+block_size/2
+		coord7 =np.array([coords[0],coords[1], coords[2]])-block_size/2
+		vertices=(
+				coord0.tolist(),
+				coord1.tolist(),
+				coord2.tolist(),
+				coord3.tolist(),
+				coord4.tolist(),
+				coord5.tolist(),
+				coord6.tolist(),
+				coord7.tolist(),
+			)
+		
 
 
 
-	edges = ((0,1),
-			(1,2),
-			(2,3),
-			(3,0),
-			(5,6),
-			(6,7),
-			(7,4),
-			(4,5),
-			(0,5),
-			(1,6),
-			(2,7),
-			(3,4))
+		edges = ((0,1),
+				(1,2),
+				(2,3),
+				(3,0),
+				(5,6),
+				(6,7),
+				(7,4),
+				(4,5),
+				(0,5),
+				(1,6),
+				(2,7),
+				(3,4))
 
-	surfaces = ((0, 1, 2, 3),
-				(4, 5, 6, 7),
-				(0, 1, 6, 5),
-				(2, 1, 6, 7),
-				(7, 2, 3, 4),
-				(3, 4, 5, 0))
-	if not fill:
-		glBegin(GL_LINES)
-		glColor3fv(black)
-		for edge in edges:
-			for vertex in edge:
-				glVertex3fv(vertices[vertex])
-		glEnd()
-	else:	
-		i = 0
-		colors = color
-		glBegin(GL_QUADS)
-		for surface in surfaces:
-			for vertex in surface:
-				glColor3fv(colors[i % len(colors)])
-				i += 1
-				glVertex3fv(vertices[vertex])
-		glEnd()
+		surfaces = ((0, 1, 2, 3),
+					(4, 5, 6, 7),
+					(0, 1, 6, 5),
+					(2, 1, 6, 7),
+					(7, 2, 3, 4),
+					(3, 4, 5, 0))
+		if not fill:
+			glBegin(GL_LINES)
+			glColor3fv(black)
+			for edge in edges:
+				for vertex in edge:
+					glVertex3fv(vertices[vertex])
+			glEnd()
+		else:	
+			i = 0
+			colors = color
+			glBegin(GL_QUADS)
+			for surface in surfaces:
+				for vertex in surface:
+					glColor3fv(colors[i % len(colors)])
+					i += 1
+					glVertex3fv(vertices[vertex])
+			glEnd()
 
 def apple(coords, block_size = 0.25):
 	cube(coords, block_size, color = [red, pink])
@@ -87,10 +87,7 @@ def snake(snakelist, snakelen, block_size = 0.25):
 		cube(xyz, block_size, [sky, yellow])
 
 def main():
-	# PyGame Initialization
 	pygame.init()
-
-	# Game Display
 	display_height = 800
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
@@ -177,7 +174,7 @@ def main():
 		# Rendering
 		#glRotatef(0.1, 0, 1, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-		print(score)
+		# print(score)
 		cube((0, 0, 0), arena_size, color = [gray, white])
 		cube((0, 0, 0), arena_size, fill = False)
 
