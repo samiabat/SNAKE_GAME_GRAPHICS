@@ -17,14 +17,14 @@ pink = (1, 0, 1)
 upperBound = (255, 255, 255)
 
 def cube(coords, block_size, color = [white], fill = True):
-	vertices = [(coords[0],coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2]),
-				(coords[0], coords[1], coords[2])]
+	vertices = [np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2,
+				np.array([coords[0],coords[1], coords[2]])+block_size/2]
 
 	edges = ((0,1),
 			(1,2),
