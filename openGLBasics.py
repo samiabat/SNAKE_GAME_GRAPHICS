@@ -5,7 +5,6 @@ from OpenGL.GLU import *
 import random
 import numpy as np 
 from queue import deque
-#Colors using RGB format
 
 red = (1, 0, 0)
 green = (0, 1, 0)
@@ -28,6 +27,7 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 		coordinate5 =np.array([coordinates[0],coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
 		coordinate6 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
 		coordinate7 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
+		
 		vertices=(
 				coordinate0.tolist(),
 				coordinate1.tolist(),
@@ -96,7 +96,8 @@ def main():
 	clock = pygame.time.Clock()
 	FPS = 10
 
-	block_size = 0.25
+
+	block_size = 0.5
 	arena_size = 25 * block_size
  
 	x_change, y_change, z_change = block_size, 0, 0
@@ -161,7 +162,7 @@ def main():
 		if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
 			game_over = True
 
-		# Got Apple
+
 		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
 			food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
@@ -177,8 +178,7 @@ def main():
 		# Rendering
 		#glRotatef(0.1, 0, 1, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-		# print(score)
-		snakeBoard((0, 0, 0), arena_size, color = [gray, white])
+		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
 		target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
