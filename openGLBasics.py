@@ -164,9 +164,9 @@ def main():
 
 
 		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
-			food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+			food_x_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+			food_y_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+			food_z_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			snake_length += 1
 			score += 1
 
