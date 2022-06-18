@@ -94,7 +94,7 @@ def main():
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	clock = pygame.time.Clock()
-	FPS = 10
+	FPS = 2
 
 
 	block_size = 0.5
@@ -118,10 +118,8 @@ def main():
 
 	glTranslatef(0.0, 0.0, -2 * arena_size)
 
-	# Main Loop
 	game_over = False
 	while not game_over:
-		# Event Handling
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				pygame.quit()
@@ -148,19 +146,18 @@ def main():
 				elif event.key == pygame.K_s and z_enable:
 					x_change, y_change, z_change = 0, 0, block_size
 					x_enable, y_enable, z_enable = True, True, False
-				elif event.key == pygame.K_p: # Cheat Code :p
+				elif event.key == pygame.K_p:
 					snake_length += 1
 					score += 1
 
-		# Game Logic
 		x += x_change
 		y += y_change
 		z += z_change
 		snake_lsit.append((x, y, z))
 
 		# Hit Boundaries
-		if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
-			game_over = True
+		# if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
+		# 	game_over = True
 
 
 		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
@@ -176,7 +173,7 @@ def main():
 					game_over = True 
 
 		# Rendering
-		#glRotatef(0.1, 0, 1, 0)
+		glRotatef(0.1, 0, 1, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
