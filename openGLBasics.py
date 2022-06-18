@@ -74,45 +74,33 @@ def snakeBoard(coordinates, block_size, color = [white], filled = True):
 
 
 
-		edges = ((0,1),
-				(1,2),
-				(2,3),
-				(3,0),
-				(5,6),
-				(6,7),
-				(7,4),
-				(4,5),
-				(0,5),
-				(1,6),
-				(2,7),
-				(3,4))
-
-		surfaces = ((0, 1, 2, 3),
-					(4, 5, 6, 7),
-					(0, 1, 6, 5),
+		surfaces = (
 					(2, 1, 6, 7),
-					(7, 2, 3, 4),
-					(3, 4, 5, 0))
-		if not filled:
-			glBegin(GL_LINES)
-			glColor3fv(white)
-			for edge in edges:
-				for vertex in edge:
-					glVertex3fv(vertices[vertex])
-			glEnd()
-		else:	
-			i = 0
-			colors = color
-			glBegin(GL_QUADS)
-			for surface in surfaces:
-				for vertex in surface:
-					glColor3fv(colors[i % len(colors)])
-					i += 1
-					glVertex3fv(vertices[vertex])
-			glEnd()
+					)
+  
+		transform_matrix=np.array([
+       								[1,		0,		0		],
+                              		[0,np.cos(150),-np.sin(150)],
+                                	[0,np.sin(150),np.cos(150)]
+                                ])
+
+		index = 0
+		colors = color
+		glBegin(GL_QUADS)
+		
+		for surface in surfaces:
+			for vertex in surface:
+				glColor3fv(colors[index % len(colors)])
+				index += 1
+				vertex=vertices[vertex]
+				vertex=np.dot(vertex,transform_matrix)
+				glVertex3fv(vertex)
+		glEnd()
+   
 
 def target_food(coordinates, block_size = 0.25):
-	snakeBoard(coordinates, block_size, color = [red, pink])
+    snakeBoard(coordinates, block_size, color = [red, pink])
+    
 def snake(snake_lsit, snake_length, block_size = 0.49):
 	if len(snake_lsit) > snake_length:
 		snake_lsit.popleft()
@@ -124,6 +112,7 @@ def main():
 	display_height = 800
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
+	glClearColor(0.7,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
 	FPS = 5
 
@@ -131,22 +120,18 @@ def main():
 	block_size = 0.5
 	arena_size = 25 * block_size
  
-	x_change, y_change, z_change = block_size, 0, 0
-	x, y, z = 0, 0, 0
+	x_change,z_change = block_size,  0
+	x_coord, y_coord, z_coord = 0, 0, 0
 	score = 0
-	x_enable = y_enable = z_enable = True
+	x_enable =  z_enable = True
 
 	snake_length = 1
 	snake_lsit = deque([])
 
-	food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	food_y_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
-
-	# OpenGL Params
+	food_x_coordinate = round((random.randrange(-44,44)))*0.1 
+	food_z_coordinate = round((random.randrange(-5,190)))*0.04 
+	target_food((food_x_coordinate, 0,food_z_coordinate), block_size)
 	gluPerspective(45, (display_width / display_height), 0.1, 50.0)
-
 	glTranslatef(0.0, 0.0, -2 * arena_size)
 
 	game_over = False
@@ -160,41 +145,30 @@ def main():
 					pygame.quit()
 					quit()
 				elif event.key == pygame.K_RIGHT and x_enable:
-					x_change, y_change, z_change = block_size, 0, 0
-					x_enable, y_enable, z_enable = False, True, True
+					x_change,  z_change = block_size,  0
+					x_enable, z_enable = False, True
 				elif event.key == pygame.K_LEFT and x_enable:
-					x_change, y_change, z_change = -block_size, 0, 0
-					x_enable, y_enable, z_enable = False, True, True
-				elif event.key == pygame.K_UP and y_enable:
-					x_change, y_change, z_change = 0, block_size, 0
-					x_enable, y_enable, z_enable = True, False, True
-				elif event.key == pygame.K_DOWN and y_enable:
-					x_change, y_change, z_change = 0, -block_size, 0
-					x_enable, y_enable, z_enable = True, False, True
-				elif event.key == pygame.K_w and z_enable:
-					x_change, y_change, z_change = 0, 0, -block_size
-					x_enable, y_enable, z_enable = True, True, False
-				elif event.key == pygame.K_s and z_enable:
-					x_change, y_change, z_change = 0, 0, block_size
-					x_enable, y_enable, z_enable = True, True, False
-				elif event.key == pygame.K_p:
-					snake_length += 1
-					score += 1
-
-		x += x_change
-		y += y_change
-		z += z_change
-		snake_lsit.append((x, y, z))
+					x_change,  z_change = -block_size,  0
+					x_enable, z_enable = False, True
+				elif event.key == pygame.K_UP and z_enable:
+					x_change,  z_change = 0,  -block_size
+					x_enable, z_enable = True, True
+				elif event.key == pygame.K_DOWN and z_enable:
+					x_change,  z_change = 0, block_size
+					x_enable, z_enable = True, True
+				
+		x_coord += x_change
+		y_coord += 0
+		z_coord += z_change
+		snake_lsit.append((x_coord, y_coord, z_coord))
 
 		# Hit Boundaries
-		if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
+		if abs(x_coord) >= 4.5 or z_coord<=-0.4 or z_coord>=8:
 			game_over = True
-
-
-		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
-			food_x_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			food_y_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			food_z_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+		if (abs(x_coord-food_x_coordinate)<=0.5) and abs(z_coord-food_z_coordinate)<=0.5:
+			print("Hitted the target")
+			food_x_coordinate = round((np.random.randint(-44,44)))*0.1
+			food_z_coordinate = round((np.random.randint(-5,190)))*0.04
 			snake_length += 1
 			score += 1
 
@@ -203,13 +177,12 @@ def main():
 				if snake_lsit[i][0] == snake_lsit[j][0] and snake_lsit[i][1] == snake_lsit[j][1] and snake_lsit[i][2] == snake_lsit[j][2]:
 					game_over = True 
 
-		# Rendering
-		glRotatef(0.1, 0, 1, 0)
+		glRotatef(0, 0, 0, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
 		snakeBoard((0, 0, 0), arena_size, filled = False)
 
-		target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
+		target_food((food_x_coordinate, 0,food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
 		clock.tick(FPS)
