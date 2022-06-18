@@ -185,6 +185,7 @@ def main():
 		target_food((food_x_coordinate, 0,food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
+  
 		clock.tick(FPS)
 
 if __name__ == "__main__":
