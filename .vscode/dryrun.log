@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/a/Desktop/snk_final/SNAKE_GAME_GRAPHICS'
+make: Leaving directory '/home/a/Desktop/snk_final/SNAKE_GAME_GRAPHICS'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
