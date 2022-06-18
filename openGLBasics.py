@@ -18,15 +18,47 @@ pink = (1, 0, 1)
 
 upperBound = (255, 255, 255)
 
-def snakeBoard(coordinates, block_size, color = [white], fill = True):
-		coordinate0 =np.array([coordinates[0],coordinates[1], coordinates[2]])+block_size/2
-		coordinate1 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate2 =np.array([coordinates[0]-2*(block_size/2),coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate3 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]])+block_size/2
-		coordinate4 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate5 =np.array([coordinates[0],coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate6 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate7 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
+def snakeBoard(coordinates, block_size, color = [white], filled = True):
+		coordinate0 =np.array([
+      					coordinates[0],
+                        coordinates[1], 
+                        coordinates[2]
+                        ])+block_size/2
+		coordinate1 =np.array([
+      					coordinates[0],
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate2 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate3 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1], 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate4 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1], 
+               			coordinates[2]-2*(block_size/2)
+                  		])+block_size/2
+		coordinate5 =np.array([
+      					coordinates[0],
+           				coordinates[1], 
+           				coordinates[2]-2*(block_size/2)
+               			])+block_size/2
+		coordinate6 =np.array([
+      					coordinates[0],
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]-2*(block_size/2)
+                  		])+block_size/2
+		coordinate7 =np.array([
+      					coordinates[0],
+           				coordinates[1], 
+               			coordinates[2]
+                  		])-block_size/2
 		
 		vertices=(
 				coordinate0.tolist(),
@@ -60,6 +92,7 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 					#(4, 5, 6, 7),
 					# (0, 1, 6, 5),
 					(2, 1, 6, 7),
+<<<<<<< HEAD
 					# (7, 2, 3, 4),
 					#(3, 4, 5, 0)
 					)
@@ -70,6 +103,11 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 
 
 		if not fill:
+=======
+					(7, 2, 3, 4),
+					(3, 4, 5, 0))
+		if not filled:
+>>>>>>> acf6d75e1d7c08b575845e5cf978f120dc5a3b6d
 			glBegin(GL_LINES)
 			glColor3fv(white)
 			for edge in edges:
@@ -92,7 +130,11 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 
 def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
+<<<<<<< HEAD
 def snake(snake_lsit, snake_length, block_size = 0.5):
+=======
+def snake(snake_lsit, snake_length, block_size = 0.49):
+>>>>>>> acf6d75e1d7c08b575845e5cf978f120dc5a3b6d
 	if len(snake_lsit) > snake_length:
 		snake_lsit.popleft()
 	for xyz in snake_lsit:
@@ -104,7 +146,11 @@ def main():
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	clock = pygame.time.Clock()
+<<<<<<< HEAD
 	FPS = 4
+=======
+	FPS = 5
+>>>>>>> acf6d75e1d7c08b575845e5cf978f120dc5a3b6d
 
 
 	block_size = 0.5
@@ -166,8 +212,13 @@ def main():
 		snake_lsit.append((x, y, z))
 
 		# Hit Boundaries
+<<<<<<< HEAD
 		# if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
 		# 	game_over = True    
+=======
+		if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
+			game_over = True
+>>>>>>> acf6d75e1d7c08b575845e5cf978f120dc5a3b6d
 
 
 		if (abs(x-food_x_coordinate)<=0.09 and abs(z-food_z_coordinate)<=0.09):
@@ -186,7 +237,7 @@ def main():
 		glRotatef(0, 0, 0, 1)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
-		snakeBoard((0, 0, 0), arena_size, fill = False)
+		snakeBoard((0, 0, 0), arena_size, filled = False)
 
 		target_food((food_x_coordinate, 0, food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
