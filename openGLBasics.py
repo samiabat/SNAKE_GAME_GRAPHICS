@@ -42,31 +42,40 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 
 
 
-		edges = ((0,1),
-				(1,2),
-				(2,3),
-				(3,0),
-				(5,6),
-				(6,7),
-				(7,4),
-				(4,5),
-				(0,5),
-				(1,6),
-				(2,7),
-				(3,4))
+		edges = (#(0,1),
+				# (1,2),
+				# (2,3),
+				# (3,0),
+				# (5,6),
+				# (6,7),
+				# (7,4),
+				# (4,5),
+				# (0,5),
+				# (1,6),
+				# (2,7),
+				# (3,4)
+				)
 
-		surfaces = ((0, 1, 2, 3),
-					(4, 5, 6, 7),
-					(0, 1, 6, 5),
+		surfaces = (#(0, 1, 2, 3),
+					#(4, 5, 6, 7),
+					# (0, 1, 6, 5),
 					(2, 1, 6, 7),
-					(7, 2, 3, 4),
-					(3, 4, 5, 0))
+					# (7, 2, 3, 4),
+					#(3, 4, 5, 0)
+					)
+		degree = 150
+		tranform = np.array([[1, 0, 0], 
+		[0, np.cos(degree), -np.sin(degree)],
+		 [0, np.sin(degree), np.cos(degree)]])
+
+
 		if not fill:
 			glBegin(GL_LINES)
 			glColor3fv(white)
 			for edge in edges:
 				for vertex in edge:
 					glVertex3fv(vertices[vertex])
+
 			glEnd()
 		else:	
 			i = 0
@@ -74,17 +83,18 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 			glBegin(GL_QUADS)
 			for surface in surfaces:
 				for vertex in surface:
+					vertex = vertices[vertex] 
+					vertex = np.dot(vertex, tranform)
 					glColor3fv(colors[i % len(colors)])
 					i += 1
-					glVertex3fv(vertices[vertex])
+					glVertex3fv(vertex)
 			glEnd()
 
 def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
-def snake(snake_lsit, snake_length, block_size = 0.25):
+def snake(snake_lsit, snake_length, block_size = 0.5):
 	if len(snake_lsit) > snake_length:
 		snake_lsit.popleft()
-
 	for xyz in snake_lsit:
 		snakeBoard(xyz, block_size, [sky, yellow])
 
@@ -94,7 +104,7 @@ def main():
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	clock = pygame.time.Clock()
-	FPS = 2
+	FPS = 4
 
 
 	block_size = 0.5
@@ -135,10 +145,10 @@ def main():
 					x_change, y_change, z_change = -block_size, 0, 0
 					x_enable, y_enable, z_enable = False, True, True
 				elif event.key == pygame.K_UP and y_enable:
-					x_change, y_change, z_change = 0, block_size, 0
+					x_change, y_change, z_change = 0, 0, -block_size
 					x_enable, y_enable, z_enable = True, False, True
 				elif event.key == pygame.K_DOWN and y_enable:
-					x_change, y_change, z_change = 0, -block_size, 0
+					x_change, y_change, z_change = 0,  0, block_size
 					x_enable, y_enable, z_enable = True, False, True
 				elif event.key == pygame.K_w and z_enable:
 					x_change, y_change, z_change = 0, 0, -block_size
@@ -157,10 +167,10 @@ def main():
 
 		# Hit Boundaries
 		# if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
-		# 	game_over = True
+		# 	game_over = True    
 
 
-		if (abs(x-food_x_coordinate)<=0.09 and abs(y-food_y_coordinate)<=0.09):
+		if (abs(x-food_x_coordinate)<=0.09 and abs(z-food_z_coordinate)<=0.09):
 			food_x_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			food_y_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 			food_z_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
@@ -173,12 +183,12 @@ def main():
 					game_over = True 
 
 		# Rendering
-		glRotatef(0.1, 0, 1, 0)
+		glRotatef(0, 0, 0, 1)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
-		target_food((food_x_coordinate, food_y_coordinate, food_z_coordinate), block_size)
+		target_food((food_x_coordinate, 0, food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
 		clock.tick(FPS)
