@@ -19,14 +19,46 @@ pink = (1, 0, 1)
 upperBound = (255, 255, 255)
 
 def snakeBoard(coordinates, block_size, color = [white], filled = True):
-		coordinate0 =np.array([coordinates[0],coordinates[1], coordinates[2]])+block_size/2
-		coordinate1 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate2 =np.array([coordinates[0]-2*(block_size/2),coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate3 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]])+block_size/2
-		coordinate4 =np.array([coordinates[0]-2*(block_size/2),coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate5 =np.array([coordinates[0],coordinates[1], coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate6 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate7 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
+		coordinate0 =np.array([
+      					coordinates[0],
+                        coordinates[1], 
+                        coordinates[2]
+                        ])+block_size/2
+		coordinate1 =np.array([
+      					coordinates[0],
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate2 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate3 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1], 
+               			coordinates[2]
+                  		])+block_size/2
+		coordinate4 =np.array([
+      					coordinates[0]-2*(block_size/2),
+           				coordinates[1], 
+               			coordinates[2]-2*(block_size/2)
+                  		])+block_size/2
+		coordinate5 =np.array([
+      					coordinates[0],
+           				coordinates[1], 
+           				coordinates[2]-2*(block_size/2)
+               			])+block_size/2
+		coordinate6 =np.array([
+      					coordinates[0],
+           				coordinates[1]-2*(block_size/2), 
+               			coordinates[2]-2*(block_size/2)
+                  		])+block_size/2
+		coordinate7 =np.array([
+      					coordinates[0],
+           				coordinates[1], 
+               			coordinates[2]
+                  		])-block_size/2
 		
 		vertices=(
 				coordinate0.tolist(),
