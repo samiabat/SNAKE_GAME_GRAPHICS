@@ -112,7 +112,7 @@ def main():
 	display_height = 800
 	display_width = 800
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
-	glClearColor(0.7,0.8,0.89,0.98)
+	glClearColor(0.2,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
 	FPS = 5
 
