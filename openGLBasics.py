@@ -88,11 +88,9 @@ def main():
 	snake_lsit = deque([])
 
 	food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	# food_y_coordinate = 0
 	food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
 	target_food((food_x_coordinate, 0, food_z_coordinate), block_size)
 
-	# OpenGL Params
 	gluPerspective(45, 1, 0.1, 50.0)
 
 	glTranslatef(0.0, 0.0, -2 * arena_size)
@@ -125,11 +123,9 @@ def main():
 		z_coord += z_change
 		snake_lsit.append((x_coord, y_coord, z_coord))
 
-		# Hit Boundaries
 		if abs(x_coord) >= 4.5 or z_coord<=-0.4 or z_coord>=8:
 			game_over = True
 		if (abs(x_coord-food_x_coordinate)<=0.5) and abs(z_coord-food_z_coordinate)<=0.5:
-			print("Hitted the target")
 			food_x_coordinate = round((np.random.randint(-44,44)))*0.1
 			food_z_coordinate = round((np.random.randint(-5,190)))*0.04
 			snake_length += 1
