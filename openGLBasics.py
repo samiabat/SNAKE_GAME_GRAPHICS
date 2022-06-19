@@ -1,7 +1,9 @@
+import turtle
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from turtle import *
 import random
 import numpy as np 
 from queue import deque
@@ -16,47 +18,48 @@ black = (0, 0, 0)
 gray = (0.5, 0.5, 0.5)
 pink = (1, 0, 1)
 
+score_result = 0
 upperBound = (255, 255, 255)
 
 def snakeBoard(coordinates, block_size, color = [white], fill = True):
-		coordinate0 =np.array([coordinates[0]-2*(block_size/2),coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate1 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
-		coordinate2 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
-		coordinate3 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
-		
-		vertices=(
-				coordinate0.tolist(),
-				coordinate1.tolist(),
-				coordinate2.tolist(),
-				coordinate3.tolist(),
-			)
-		
+	coordinate0 =np.array([coordinates[0]-2*(block_size/2),coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
+	coordinate1 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]])+block_size/2
+	coordinate2 =np.array([coordinates[0],coordinates[1]-2*(block_size/2), coordinates[2]-2*(block_size/2)])+block_size/2
+	coordinate3 =np.array([coordinates[0],coordinates[1], coordinates[2]])-block_size/2
+	
+	vertices=(
+			coordinate0.tolist(),
+			coordinate1.tolist(),
+			coordinate2.tolist(),
+			coordinate3.tolist(),
+		)
+	
 
 
 
-		
-		surfaces = (
-					(0,1,2,3),
-					)
-		degree = 150
-		tranform = np.array([[1, 0, 0], 
-		[0, np.cos(degree), -np.sin(degree)],
-		 [0, np.sin(degree), np.cos(degree)]])
+	
+	surfaces = (
+				(0,1,2,3),
+				)
+	degree = 150
+	tranform = np.array([[1, 0, 0], 
+	[0, np.cos(degree), -np.sin(degree)],
+		[0, np.sin(degree), np.cos(degree)]])
 
 
-		
-		if fill:	
-			i = 0
-			colors = color
-			glBegin(GL_QUADS)
-			for surface in surfaces:
-				for vertex in range(len(surface)):
-					vertex = vertices[vertex] 
-					vertex = np.dot(vertex, tranform)
-					glColor3fv(colors[i % len(colors)])
-					i += 1
-					glVertex3fv(vertex)
-			glEnd()
+	
+	if fill:	
+		i = 0
+		colors = color
+		glBegin(GL_QUADS)
+		for surface in surfaces:
+			for vertex in range(len(surface)):
+				vertex = vertices[vertex] 
+				vertex = np.dot(vertex, tranform)
+				glColor3fv(colors[i % len(colors)])
+				i += 1
+				glVertex3fv(vertex)
+		glEnd()
 
 def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
@@ -69,15 +72,13 @@ def snake(snake_lsit, snake_length, block_size = 0.5):
 		snakeBoard(xyz, block_size, [sky, yellow])
 
 def main():
-	# level = {"easy", "midium", "hard"}
 	pygame.init()
 	display_height = 600
 	display_width = 1000
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	glClearColor(0.2,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
-	level = 4
-	FPS = level
+	FPS = 4
 
 
 	block_size = 0.5
@@ -133,7 +134,9 @@ def main():
 			food_x_coordinate = round((np.random.randint(-44,44)))*0.1
 			food_z_coordinate = round((np.random.randint(-5,190)))*0.04
 			snake_length += 1
+			global score_result
 			score += 1
+			score_result = score
 
 		for i in range(0, len(snake_lsit)):
 			for j in range(i + 1, len(snake_lsit)):
@@ -147,9 +150,21 @@ def main():
 
 		target_food((food_x_coordinate, 0,food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
+		
 		pygame.display.flip()
   
 		clock.tick(FPS)
 
 if __name__ == "__main__":
 	main()
+	pygame.quit()
+	color('red', 'yellow')
+	begin_fill()
+	pos=10000
+	write("your score\n"+str(score_result),font=('Arial', 30, 'italic'), align="center")
+	hideturtle()
+	win=Screen()
+	exitonclick()
+	win.mainloop()
+
+
