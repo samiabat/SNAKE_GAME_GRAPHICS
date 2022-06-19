@@ -44,9 +44,8 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 		 [0, np.sin(degree), np.cos(degree)]])
 
 
-		if not fill:
-			pass
-		else:	
+		
+		if fill:	
 			i = 0
 			colors = color
 			glBegin(GL_QUADS)
@@ -74,7 +73,7 @@ def main():
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	glClearColor(0.2,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
-	FPS = 5
+	FPS = 4
 
 
 	block_size = 0.5
@@ -112,30 +111,27 @@ def main():
 					x_change,  z_change = block_size,  0
 					x_enable, z_enable = False, True
 				elif event.key == pygame.K_LEFT and x_enable:
-					x_change, y_change, z_change = -block_size, 0, 0
-					x_enable, y_enable, z_enable = False, True, True
-				elif event.key == pygame.K_UP and y_enable:
-					x_change, y_change, z_change = 0, 0, -block_size
-					x_enable, y_enable, z_enable = True, False, True
-				elif event.key == pygame.K_DOWN and y_enable:
-					x_change, y_change, z_change = 0,  0, block_size
-					x_enable, y_enable, z_enable = True, False, True
+					x_change,  z_change = -block_size,  0
+					x_enable, z_enable = False, True
+				elif event.key == pygame.K_UP and z_enable:
+					x_change,  z_change = 0,  -block_size
+					x_enable, z_enable = True, True
+				elif event.key == pygame.K_DOWN and z_enable:
+					x_change,  z_change = 0, block_size
+					x_enable, z_enable = True, True
 				
-		x += x_change
-		y += y_change
-		z += z_change
-
-		snake_lsit.append((x, y, z))
+		x_coord += x_change
+		y_coord += 0
+		z_coord += z_change
+		snake_lsit.append((x_coord, y_coord, z_coord))
 
 		# Hit Boundaries
-		# if abs(x) >= abs((arena_size - block_size) / 2) or abs(y) >= abs((arena_size - block_size) / 2) or abs(z) >= abs((arena_size - block_size) / 2):
-		# 	game_over = True    
-
-
-		if (abs(x-food_x_coordinate)<=0.09 and abs(z-food_z_coordinate)<=0.09):
-			food_x_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			# food_y_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-			food_z_coordinate = round((np.random.randint( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+		if abs(x_coord) >= 4.5 or z_coord<=-0.4 or z_coord>=8:
+			game_over = True
+		if (abs(x_coord-food_x_coordinate)<=0.5) and abs(z_coord-food_z_coordinate)<=0.5:
+			print("Hitted the target")
+			food_x_coordinate = round((np.random.randint(-44,44)))*0.1
+			food_z_coordinate = round((np.random.randint(-5,190)))*0.04
 			snake_length += 1
 			score += 1
 
