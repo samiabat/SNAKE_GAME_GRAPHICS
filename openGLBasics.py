@@ -74,16 +74,16 @@ def main():
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	glClearColor(0.2,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
-	FPS = 4
+	FPS = 5
 
 
 	block_size = 0.5
 	arena_size = 25 * block_size
  
-	x_change, y_change, z_change = block_size, 0, 0
-	x, y, z = 0, 0, 0
+	x_change,z_change = block_size,  0
+	x_coord, y_coord, z_coord = 0, 0, 0
 	score = 0
-	x_enable = y_enable = z_enable = True
+	x_enable =  z_enable = True
 
 	snake_length = 1
 	snake_lsit = deque([])
@@ -109,8 +109,8 @@ def main():
 					pygame.quit()
 					quit()
 				elif event.key == pygame.K_RIGHT and x_enable:
-					x_change, y_change, z_change = block_size, 0, 0
-					x_enable, y_enable, z_enable = False, True, True
+					x_change,  z_change = block_size,  0
+					x_enable, z_enable = False, True
 				elif event.key == pygame.K_LEFT and x_enable:
 					x_change, y_change, z_change = -block_size, 0, 0
 					x_enable, y_enable, z_enable = False, True, True
@@ -144,15 +144,15 @@ def main():
 				if snake_lsit[i][0] == snake_lsit[j][0] and snake_lsit[i][1] == snake_lsit[j][1] and snake_lsit[i][2] == snake_lsit[j][2]:
 					game_over = True 
 
-		# Rendering
-		glRotatef(0, 0, 0, 1)
+		glRotatef(0, 0, 0, 0)
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 		snakeBoard((0, 0, 0), arena_size, color = [green, red, yellow])
 		snakeBoard((0, 0, 0), arena_size, fill = False)
 
-		target_food((food_x_coordinate, 0, food_z_coordinate), block_size)
+		target_food((food_x_coordinate, 0,food_z_coordinate), block_size)
 		snake(snake_lsit, snake_length)
 		pygame.display.flip()
+  
 		clock.tick(FPS)
 
 if __name__ == "__main__":
