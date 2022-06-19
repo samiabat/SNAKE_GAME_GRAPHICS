@@ -60,6 +60,8 @@ def snakeBoard(coordinates, block_size, color = [white], fill = True):
 
 def target_food(coordinates, block_size = 0.25):
 	snakeBoard(coordinates, block_size, color = [red, pink])
+
+	
 def snake(snake_lsit, snake_length, block_size = 0.5):
 	if len(snake_lsit) > snake_length:
 		snake_lsit.popleft()
@@ -67,13 +69,15 @@ def snake(snake_lsit, snake_length, block_size = 0.5):
 		snakeBoard(xyz, block_size, [sky, yellow])
 
 def main():
+	# level = {"easy", "midium", "hard"}
 	pygame.init()
 	display_height = 600
 	display_width = 1000
 	pygame.display.set_mode((display_width, display_height), DOUBLEBUF|OPENGL)
 	glClearColor(0.2,0.8,0.89,0.98)
 	clock = pygame.time.Clock()
-	FPS = 4
+	level = 4
+	FPS = level
 
 
 	block_size = 0.5
@@ -87,8 +91,8 @@ def main():
 	snake_length = 1
 	snake_lsit = deque([])
 
-	food_x_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
-	food_z_coordinate = round((random.randrange( - (arena_size - block_size) / 2, (arena_size - block_size) / 2)) / block_size) * block_size
+	food_x_coordinate = round((random.randrange(-44,44)))*0.1
+	food_z_coordinate = round((random.randrange(-5,190)))*0.04
 	target_food((food_x_coordinate, 0, food_z_coordinate), block_size)
 
 	gluPerspective(45, 1, 0.1, 50.0)
